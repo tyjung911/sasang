@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사상체질 자가진단 - Korean Type</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .question {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 30px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .result h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .constitution-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+        }
+
+        .constitution-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .constitution-desc {
+            list-style: none;
+            text-align: left;
+        }
+
+        .constitution-desc li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .constitution-desc li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .disclaimer {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>사상체질 자가진단</h1>
+            <p>한의학의 사상체질론을 바탕으로 한 간단한 체질 진단</p>
+        </div>
+        
+        <div class="content">
+            <form id="diagnosisForm">
+                <div id="questions"></div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    결과 확인하기
+                </button>
+            </form>
+            
+            <div id="result" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // 사상체질 설명 사전 정의
+        const constitutionExplanations = {
+            태음인: {
+                title: '태음인',
+                desc: [
+                    '체격이 크거나 하체가 발달한 경우가 많음.',
+                    '성격은 온화하고 인내심이 강함.',
+                    '폐·피부가 약할 수 있어 운동과 순환을 신경써야 함.'
+                ]
+            },
+            소양인: {
+                title: '소양인',
+                desc: [
+                    '상체나 어깨가 발달, 열이 얼굴 쪽에 집중되기 쉬움.',
+                    '외향적이지만 급한 성격일 수 있음.',
+                    '소화기 관리와 휴식이 중요.'
+                ]
+            },
+            소음인: {
+                title: '소음인',
+                desc: [
+                    '마르고 골격이 크지 않은 편, 손발이 찬 경우 많음.',
+                    '성격이 내성적·신중함.',
+                    '소화기 및 체온 관리, 따뜻한 음식 섭취 권장.'
+                ]
+            },
+            태양인: {
+                title: '태양인',
+                desc: [
+                    '상대적으로 드문 체질, 어깨가 넓고 하체가 빈약함.',
+                    '적극적이나 신경이 예민한 경향.',
+                    '간·소양경의 순환과 스트레스 관리가 필요.'
+                ]
+            },
+            모호: {
+                title: '분류 불가(혼합형)',
+                desc: [
+                    '문진 결과로 뚜렷한 체질을 특정하기 어려움.',
+                    '추가 상담 또는 전문 한의사 진단 권장.'
+                ]
+            }
+        };
+
+        const questions = [
+            // 신체적 특성
+            { id: 1, section: '신체', text: '머리가 몸에 비해 큰 편인가요?' },
+            { id: 2, section: '신체', text: '어깨가 넓고 상체가 발달한 편인가요?' },
+            { id: 3, section: '신체', text: '허벅지·엉덩이 등이 상체보다 두껍거나 잘 발달했나요?' },
+            { id: 4, section: '신체', text: '피부가 두껍거나 거친 느낌이 있나요?' },
+            { id: 5, section: '신체', text: '몸 전체가 크거나 무겁다는 인상을 주나요?' },
+            { id: 6, section: '신체', text: '손발이 자주 차가운 편인가요?' },
+            // 성격적 특성
+            { id: 7, section: '성격', text: '평소에 차분하고 인내심이 많은 편인가요?' },
+            { id: 8, section: '성격', text: '외향적이고 사회성이 좋은 편인가요?' },
+            { id: 9, section: '성격', text: '무언가를 할 때 먼저 계획부터 세우는 경향이 있나요?' },
+            { id: 10, section: '성격', text: '쉽게 불안하거나 신경이 예민해지는 편인가요?' },
+            { id: 11, section: '성격', text: '창의력이 많거나 상상력이 풍부하다고 느끼시나요?' },
+            { id: 12, section: '성격', text: '다혈질이거나 충동적인 면이 있나요?' },
+            // 주요 증상 및 건강상태
+            { id: 13, section: '증상', text: '땀을 많이 흘리며, 땀을 흘리고 나면 상쾌함을 느끼나요?' },
+            { id: 14, section: '증상', text: '땀을 흘리면 자주 피곤해지거나 체력이 떨어지나요?' },
+            { id: 15, section: '증상', text: '변비 또는 설사 등 소화 문제를 자주 겪나요?' },
+            { id: 16, section: '증상', text: '손발 냉증을 자주 느끼나요?' },
+            { id: 17, section: '증상', text: '감기, 호흡기 질환에 자주 걸리나요?' },
+            { id: 18, section: '증상', text: '허리·관절 등 반복적·지속적으로 아픈 곳이 있나요?' },
+        ];
+
+        let answers = {};
+
+        // 질문 렌더링
+        function renderQuestions() {
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = questions.map(q => `
+                <div class="question">
+                    <div class="question-text">${q.text}</div>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="q${q.id}" value="yes" onchange="handleAnswer(${q.id}, 'yes')">
+                            예
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="q${q.id}" value="no" onchange="handleAnswer(${q.id}, 'no')">
+                            아니오
+                        </label>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 답변 처리
+        function handleAnswer(id, value) {
+            answers[id] = value;
+            updateProgress();
+            updateSubmitButton();
+        }
+
+        // 진행률 업데이트
+        function updateProgress() {
+            const answeredCount = Object.keys(answers).length;
+            const progress = (answeredCount / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        // 제출 버튼 업데이트
+        function updateSubmitButton() {
+            const answeredCount = Object.keys(answers).length;
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (answeredCount === questions.length) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '결과 확인하기';
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.textContent = `${answeredCount}/${questions.length} 질문 완료`;
+            }
+        }
+
+        // 체질 판별 로직
+        function getConstitution(sectionResult) {
+            const { 신체 = 0, 성격 = 0, 증상 = 0 } = sectionResult;
+            if (신체 >= 4 && 성격 >= 3) return '태음인';
+            if (신체 >= 3 && 성격 >= 4) return '소양인';
+            if (증상 >= 4 && 신체 <= 2) return '소음인';
+            if (성격 >= 4 && 신체 <= 2) return '태양인';
+            return '모호';
+        }
+
+        // 결과 표시
+        function showResult() {
+            const sectionResult = questions.reduce((acc, q) => {
+                if (!acc[q.section]) acc[q.section] = 0;
+                if (answers[q.id] === 'yes') acc[q.section]++;
+                return acc;
+            }, {});
+
+            const constitution = getConstitution(sectionResult);
+            const resultDiv = document.getElementById('result');
+            
+            resultDiv.innerHTML = `
+                <h3>진단 결과</h3>
+                <div class="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">${sectionResult['신체'] || 0}</span>
+                        <span class="stat-label">신체적 특성</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${sectionResult['성격'] || 0}</span>
+                        <span class="stat-label">성격적 특성</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${sectionResult['증상'] || 0}</span>
+                        <span class="stat-label">건강 및 증상</span>
+                    </div>
+                </div>
+                <div class="constitution-result">
+                    <div class="constitution-title">예상 체질: ${constitutionExplanations[constitution].title}</div>
+                    <ul class="constitution-desc">
+                        ${constitutionExplanations[constitution].desc.map(d => `<li>${d}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="disclaimer">
+                    ※ 이 결과는 참고용입니다. 보다 정확한 진단은 한의학 전문가 상담이 필요합니다.
+                </div>
+            `;
+            
+            resultDiv.style.display = 'block';
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 폼 제출 처리
+        document.getElementById('diagnosisForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showResult();
+        });
+
+        // 초기화
+        renderQuestions();
+        updateProgress();
+        updateSubmitButton();
+    </script>
+</body>
+</html>
