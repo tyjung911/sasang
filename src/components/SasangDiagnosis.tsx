@@ -653,7 +653,7 @@ export default function SasangDiagnosis() {
                       setShowLanguageMenu(false);
                     }}
                     className={`w-full text-left px-3 py-2 rounded hover:bg-gray-100 transition-colors ${
-                      currentLanguage === lang.code ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
+                      currentLanguage === lang.code ? 'bg-blue-100 text-blue-700' : 'text-gray-900'
                     }`}
                   >
                     <span className="mr-2">{lang.flag}</span>
@@ -694,7 +694,7 @@ export default function SasangDiagnosis() {
 
               {/* Question Counter */}
               <div className="text-center mb-8">
-                <span className="text-lg font-medium text-gray-600">
+                <span className="text-lg font-medium text-gray-800">
                   {currentQuestionIndex + 1} / {questions.length}
                 </span>
               </div>
@@ -709,11 +709,11 @@ export default function SasangDiagnosis() {
               >
                 <div className="bg-gray-50 rounded-2xl p-8 border-l-4 border-blue-500">
                   <div className="text-center mb-6">
-                    <h3 className="text-lg font-medium text-gray-600 mb-2">{t.selectOption}</h3>
-                    <div className="text-2xl font-bold text-gray-800 mb-4">
+                    <h3 className="text-lg font-medium text-gray-800 mb-2">{t.selectOption}</h3>
+                    <div className="text-2xl font-bold text-gray-900 mb-4">
                       {currentQuestion[currentLanguage as keyof typeof currentQuestion] as string}
                     </div>
-                    <span className="text-sm bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+                    <span className="text-sm bg-blue-100 text-blue-900 px-3 py-1 rounded-full">
                       {t.categories[currentQuestion.category as keyof typeof t.categories]}
                     </span>
                   </div>
@@ -729,7 +729,7 @@ export default function SasangDiagnosis() {
                           onChange={() => handleAnswer(currentQuestion.id, option[currentLanguage as keyof typeof option])}
                           className="mr-3 scale-125"
                         />
-                        <span className="text-sm font-medium">{option[currentLanguage as keyof typeof option]}</span>
+                        <span className="text-sm font-medium text-gray-900">{option[currentLanguage as keyof typeof option]}</span>
                       </label>
                     ))}
                   </div>
@@ -800,17 +800,17 @@ export default function SasangDiagnosis() {
       {showIncompleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="text-center mb-6">
-              <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">{t.incompleteTitle}</h3>
-              <p className="text-gray-600">{t.incompleteDesc}</p>
-            </div>
+                          <div className="text-center mb-6">
+                <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">{t.incompleteTitle}</h3>
+                <p className="text-gray-800">{t.incompleteDesc}</p>
+              </div>
             
             <div className="space-y-3 mb-6">
               {unansweredQuestions.map((q) => (
                 <div key={q.id} className="bg-red-50 border border-red-200 rounded-xl p-4">
                   <div className="flex items-start justify-between">
-                                          <div className="text-gray-800 font-medium">
+                                          <div className="text-gray-900 font-medium">
                         {q[currentLanguage as keyof typeof q] as string}
                       </div>
                     <span className="text-sm bg-red-100 text-red-800 px-2 py-1 rounded-full ml-2">
